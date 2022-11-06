@@ -1,6 +1,47 @@
 homework1
 ==============================
 
+## How to install
+```bash
+pip install .
+```
+
+-----------------------------
+
+## How to train
+
+### Simple run python
+```bash
+python src/models/train_model.py <hydra options>
+```
+
+-----------------------------
+
+## How to predict
+
+### Using command line utility
+```bash
+predict [OPTIONS]
+```
+
+### Simple run python
+```bash
+python src/models/predict_model.py [OPTIONS]
+```
+
+-----------------------------
+
+### Using command line utility
+```bash
+test
+```
+
+### Simple run python
+```bash
+python tests/train_predict_test.py
+```
+
+
 A short description of the project.
 
 Project Organization
