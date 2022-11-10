@@ -5,15 +5,18 @@ from omegaconf import DictConfig, OmegaConf, MISSING
 import hydra
 from loguru import logger
 import pickle
+import joblib
 
 import os
 from pathlib import Path
 
-from src.models.define import ROOT_DIR, CONFIG_PATH
-
 from dataclasses import dataclass
 from hydra.core.config_store import ConfigStore
 from pkg_resources import resource_string
+
+from sklearn.pipeline import Pipeline
+
+from src.features.transformers import SqrTransformer
         
 @dataclass
 class ModelType:
@@ -34,7 +37,8 @@ class RF(ModelType):
 @dataclass
 class Config:
     model: ModelType
-    model_name: str = 'model.pickle'
+    sqr_feat: list = MISSING
+    model_name: str = 'model.joblib'
     dataset: str = 'heart_cleveland_upload.csv'
         
 cs = ConfigStore.instance()
@@ -59,17 +63,30 @@ def main(cfg: Config)->None:
         model = RandomForestClassifier(max_depth=cfg.model.max_depth)
         logger.info("Using Random Forest as model")
     
+    sqr_feat = cfg.sqr_feat
+    
+    pipe = Pipeline(steps = [
+                                ('transformer', SqrTransformer(sqr_feat)), 
+                                ('model', model)
+    ])
+    
     logger.info('Start training')
     
-    model.fit(X, y)
+    pipe.fit(X, y)
     
     logger.info('Finished training')
     
     logger.info('Saving model')
     
-    with open('models/'+cfg.model_name, 'wb') as file:
-        pickle.dump(model, file)
-        logger.info('Model saved')
+#     with open('models/'+cfg.model_name, 'wb') as file:
+#         pickle.dump(pipe, file)
+#         logger.info('Model saved')
+
+    joblib.dump(
+            pipe,
+            'models/'+cfg.model_name,
+        )
+    logger.info('Model saved')
         
         
 if __name__ == "__main__":

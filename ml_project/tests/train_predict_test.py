@@ -48,13 +48,14 @@ def main()->None:
     
     config = Config(
             LogReg(C=1.0),
-            'test_model.pickle',
+            ['trestbps'],
+            'test_model.joblib',
             'gen_dataset.csv',
         )
     
     train(config)
     
-    assert os.path.isfile('models/test_model.pickle')
+    assert os.path.isfile('models/test_model.joblib')
     
     df_test = gen_dataset(100)
     
@@ -66,7 +67,7 @@ def main()->None:
                                "--dataset", 
                                'data/raw/gen_dataset.csv', 
                                '--model', 
-                               'models/model.pickle', 
+                               'models/test_model.joblib', 
                                '--output', 
                                'data/raw/gen_dataset.csv'
                            ])
