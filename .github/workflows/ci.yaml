@@ -36,4 +36,4 @@ jobs:
     - name: Test
       run: |
           cd ml_project
-          test
+          python tests/train_predict_test.py
