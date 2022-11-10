@@ -6,6 +6,7 @@ from loguru import logger
 import joblib
 import click
 
+
 # from dataclasses import dataclass
 # from hydra.core.config_store import ConfigStore
 
@@ -35,26 +36,25 @@ import click
     required=True,
 )
 def main(model: str, dataset: str, output: str) -> None:
-            
     logger.info('Reading data')
-    
+
     df = pd.read_csv(dataset)
-    
+
     if 'condition' in df.columns:
         df = df.drop(['condition'], axis=1)
-    
-#     with open(model, 'rb') as file:
-#         model = pickle.load(file)
-#         logger.info('Model loaded')
+
+    #     with open(model, 'rb') as file:
+    #         model = pickle.load(file)
+    #         logger.info('Model loaded')
 
     model = joblib.load(model)
-        
+
     y_pred = model.predict(df)
-    
+
     logger.info('Saving results')
-    
+
     np.savetxt(output, y_pred, delimiter=",")
-    
+
 
 if __name__ == "__main__":
     main()

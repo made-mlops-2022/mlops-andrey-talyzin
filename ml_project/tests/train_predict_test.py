@@ -8,7 +8,6 @@ from src.models.train_model import Config, LogReg
 
 from click.testing import CliRunner
 
-
 from faker import Faker
 
 
@@ -40,43 +39,43 @@ def gen_dataset(row_num: int):
 
 def main() -> None:
     df_train = gen_dataset(300)
-    
+
     df_train.to_csv('data/raw/gen_dataset.csv')
-    
+
     config = Config(
-            LogReg(C=1.0),
-            ['trestbps'],
-            'test_model.joblib',
-            'gen_dataset.csv',
-        )
-    
+        LogReg(C=1.0),
+        ['trestbps'],
+        'test_model.joblib',
+        'gen_dataset.csv',
+    )
+
     train(config)
-    
+
     assert os.path.isfile('models/test_model.joblib')
-    
+
     df_test = gen_dataset(100)
-    
+
     df_test.to_csv('data/raw/gen_dataset.csv')
-    
+
     runner = CliRunner()
-    result = runner.invoke(predict, 
+    result = runner.invoke(predict,
                            [
-                               "--dataset", 
-                               'data/raw/gen_dataset.csv', 
-                               '--model', 
-                               'models/test_model.joblib', 
-                               '--output', 
+                               "--dataset",
+                               'data/raw/gen_dataset.csv',
+                               '--model',
+                               'models/test_model.joblib',
+                               '--output',
                                'data/raw/gen_dataset.csv'
                            ])
-    
+
     assert result.exit_code == 0
-    
+
     y_pred = np.genfromtxt('data/raw/gen_dataset.csv', delimiter=',')
-    
+
     assert y_pred.shape[0] == df_test.shape[0]
-    
+
     assert set(y_pred) == {0, 1}
-    
-    
+
+
 if __name__ == "__main__":
     main()

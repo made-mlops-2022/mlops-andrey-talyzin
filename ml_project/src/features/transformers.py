@@ -4,7 +4,6 @@ import pandas as pd
 
 class SqrTransformer(BaseEstimator, TransformerMixin):
     def __init__(self, sqr_features: list):
-
         self.sqr_features = sqr_features
 
     def fit(self, X: pd.DataFrame, y=None):

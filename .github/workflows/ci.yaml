@@ -32,7 +32,7 @@ jobs:
     - name: Lint with flake8
       run: |
           cd ml_project
-          flake8 . --count --show-source --statistics
+          flake8 . --count --show-source --statistics --ignore=W291,W292,W293
     - name: Test with pytest
       run: |
           cd ml_project
