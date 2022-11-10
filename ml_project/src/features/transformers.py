@@ -1,7 +1,6 @@
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn import preprocessing
 import pandas as pd
-import numpy as np
+
 
 class SqrTransformer(BaseEstimator, TransformerMixin):
     def __init__(self, sqr_features: list):

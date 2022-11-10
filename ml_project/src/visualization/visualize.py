@@ -1,6 +1,5 @@
 import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
 import sweetviz as sv
 
 if __name__ == "__main__":
@@ -10,4 +9,5 @@ if __name__ == "__main__":
     figure.savefig('../../reports/figures/svm_conf.png')
     
     report = sv.analyze([df, 'Heart'])
-    report.show_html('../../reports/heart_cleveland_EDA.html', open_browser=False)
+    report.show_html('../../reports/heart_cleveland_EDA.html', 
+                     open_browser=False)

@@ -1,21 +1,18 @@
 import pandas as pd
 import numpy as np
-from pathlib import Path
 import os
 
 from src.models.train_model import main as train
 from src.models.predict_model import main as predict
-from src.models.train_model import Config, LogReg, RF
-from tempfile import NamedTemporaryFile, TemporaryDirectory
+from src.models.train_model import Config, LogReg
 
 from click.testing import CliRunner
 
-import click
 
 from faker import Faker
 
 
-def gen_dataset(row_num:int):
+def gen_dataset(row_num: int):
     fake = Faker()
 
     rows = [
@@ -41,7 +38,7 @@ def gen_dataset(row_num:int):
     return pd.DataFrame(rows)
 
 
-def main()->None:
+def main() -> None:
     df_train = gen_dataset(300)
     
     df_train.to_csv('data/raw/gen_dataset.csv')
@@ -78,7 +75,7 @@ def main()->None:
     
     assert y_pred.shape[0] == df_test.shape[0]
     
-    assert set(y_pred) == {0,1}
+    assert set(y_pred) == {0, 1}
     
     
 if __name__ == "__main__":
