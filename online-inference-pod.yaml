@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: online-inference
+  labels: 
+    app: online-inference
+spec:
+  containers:
+  - name: online-inference
+    image: rtmlrtx/online-inference:v1 
+    ports:
+    - containerPort: 8080
