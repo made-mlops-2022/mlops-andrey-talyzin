@@ -1,5 +1,16 @@
+.ipynb_checkpoints/
+*.csv
+*.joblib
+*.pickle
 venv/
 __pycache__
+outputs/
+*.egg-info
+.coverage
+keys.txt
+.env
+mlruns/
+build/
 dats/model.joblib
 app/.pytest_cache
 .DS_Store
