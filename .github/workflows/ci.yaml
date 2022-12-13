@@ -3,11 +3,7 @@
 
 name: Python package ci
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: push
 
 jobs:
   build:
@@ -33,7 +29,7 @@ jobs:
       run: |
           cd ml_project
           flake8 . --count --show-source --statistics --ignore=W291,W292,W293
-    - name: Test with pytest
+    - name: Test
       run: |
           cd ml_project
           test

@@ -40,7 +40,7 @@ def gen_dataset(row_num: int):
 def main() -> None:
     df_train = gen_dataset(300)
 
-    df_train.to_csv('data/raw/gen_dataset.csv')
+    df_train.to_csv('./data/raw/gen_dataset.csv')
 
     config = Config(
         LogReg(C=1.0),
@@ -51,26 +51,26 @@ def main() -> None:
 
     train(config)
 
-    assert os.path.isfile('models/test_model.joblib')
+    assert os.path.isfile('./models/test_model.joblib')
 
     df_test = gen_dataset(100)
 
-    df_test.to_csv('data/raw/gen_dataset.csv')
+    df_test.to_csv('./data/raw/gen_dataset.csv')
 
     runner = CliRunner()
     result = runner.invoke(predict,
                            [
                                "--dataset",
-                               'data/raw/gen_dataset.csv',
+                               './data/raw/gen_dataset.csv',
                                '--model',
-                               'models/test_model.joblib',
+                               './models/test_model.joblib',
                                '--output',
-                               'data/raw/gen_dataset.csv'
+                               './data/raw/gen_dataset.csv'
                            ])
 
     assert result.exit_code == 0
 
-    y_pred = np.genfromtxt('data/raw/gen_dataset.csv', delimiter=',')
+    y_pred = np.genfromtxt('./data/raw/gen_dataset.csv', delimiter=',')
 
     assert y_pred.shape[0] == df_test.shape[0]
 
