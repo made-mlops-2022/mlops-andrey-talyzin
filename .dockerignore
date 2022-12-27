@@ -1,0 +1,5 @@
+venv/
+__pycache__
+README.md
+dats/model.joblib
+app/.pytest_cache
