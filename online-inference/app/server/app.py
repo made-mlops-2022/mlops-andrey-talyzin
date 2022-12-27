@@ -6,13 +6,26 @@ import joblib
 from data.model import HeartRequest
 import urllib.request
 import pandas as pd
+import time
+from fastapi_utils.tasks import repeat_every
 
 app = FastAPI()
 model = None
+time_startup = 0
+
+
+@app.on_event("startup")
+@repeat_every(seconds=40)
+def drop():
+    global time_startup
+    if (time.time() - time_startup) > 120:
+        exit()
 
 
 @app.on_event("startup")
 def load_model():
+    global time_startup
+    time_startup = time.time()
     model_path = os.getenv("MODEL_PATH")
     # model_path = "data/model.joblib"
     model_url = os.getenv("MODEL_URL")
